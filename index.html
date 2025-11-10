@@ -2,83 +2,87 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jio M3U Player</title>
+<title>DRM DASH M3U Player</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.3.8/shaka-player.compiled.js"></script>
 <style>
-    body { font-family: Arial, sans-serif; background: #f0f0f0; padding: 20px; }
-    input, button { padding: 10px; font-size: 16px; margin: 5px 0; }
-    #channels { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
-    .channel { background: #fff; padding: 10px; border-radius: 8px; cursor: pointer; width: 200px; text-align: center; box-shadow: 0 2px 6px rgba(0,0,0,0.2);}
-    .channel img { max-width: 100%; border-radius: 4px; }
+  body { font-family: Arial; margin: 20px; }
+  #player { width: 100%; max-width: 800px; height: 450px; background: black; }
+  #playlist { margin-top: 20px; }
+  button { display: block; margin: 5px 0; padding: 10px; }
 </style>
 </head>
 <body>
 
-<h1>Jio M3U Player</h1>
-<input type="text" id="m3uUrl" placeholder="Paste M3U URL here" size="50"/>
-<button onclick="loadM3U()">Load Channels</button>
+<h1>DRM DASH M3U Player</h1>
+<video id="player" controls autoplay></video>
 
-<div id="channels"></div>
+<div id="playlist"></div>
 
 <script>
-async function loadM3U() {
-    const url = document.getElementById('m3uUrl').value;
-    if (!url) return alert('Please enter an M3U URL.');
+// Example parsed M3U (replace with dynamic parsing if needed)
+const channels = [
+  {
+    name: "Nakshatra Digital TV",
+    logo: "https://jiotvimages.cdn.jio.com/dare_images/images/Nakshatra_Digital_TV.png",
+    url: "https://jiotvpllive.cdn.jio.com/bpk-tv/Nakshatra_Digital_TV_BTS/output/index.mpd?__hdnea__=st=1762735638~exp=1762822038~acl=/*~hmac=951e44e4a288c899683e83e82cf7a9359e11fbe81264f59d051d51a382de5acd",
+    clearkey: { "37b9a46068985672ba01da4d0e1e0230": "7403aedf707ddf0607f96ba367f5306a" },
+    headers: { "cookie": "__hdnea__=st=1762735638~exp=1762822038~acl=/*~hmac=951e44e4a288c899683e83e82cf7a9359e11fbe81264f59d051d51a382de5acd" }
+  },
+  {
+    name: "RRN News",
+    logo: "https://jiotvimages.cdn.jio.com/dare_images/images/RRN_News.png",
+    url: "https://jiotvpllive.cdn.jio.com/bpk-tv/RRN_News_BTS/output/index.mpd?__hdnea__=st=1762735638~exp=1762822038~acl=/*~hmac=951e44e4a288c899683e83e82cf7a9359e11fbe81264f59d051d51a382de5acd",
+    clearkey: { "aef474fb421b516297325c8684411722": "3bfb218ddf6704641bfe205c0887c283" },
+    headers: { "cookie": "__hdnea__=st=1762735638~exp=1762822038~acl=/*~hmac=951e44e4a288c899683e83e82cf7a9359e11fbe81264f59d051d51a382de5acd" }
+  }
+];
 
-    try {
-        const res = await fetch(url);
-        const text = await res.text();
+// Initialize Shaka Player
+const video = document.getElementById('player');
+const player = new shaka.Player(video);
 
-        const lines = text.split('\n');
-        const channels = [];
+// Error handling
+player.addEventListener('error', e => console.error('Error code', e.detail.code, e.detail));
 
-        for (let i = 0; i < lines.length; i++) {
-            const line = lines[i];
-            if (line.startsWith('#EXTINF')) {
-                const infoMatch = line.match(/tvg-logo="(.*?)".*?,(.*)/);
-                if (!infoMatch) continue;
+function playChannel(channel) {
+  const manifestUri = channel.url;
 
-                const logo = infoMatch[1];
-                const name = infoMatch[2];
-
-                // Stream URL is usually next line that is not comment
-                let streamUrl = '';
-                for (let j = i + 1; j < lines.length; j++) {
-                    if (!lines[j].startsWith('#') && lines[j].trim()) {
-                        streamUrl = lines[j].trim();
-                        break;
-                    }
-                }
-
-                if (streamUrl) channels.push({name, logo, streamUrl});
-            }
-        }
-
-        displayChannels(channels);
-    } catch (err) {
-        console.error(err);
-        alert('Failed to fetch or parse M3U.');
+  // Configure ClearKey DRM
+  player.configure({
+    drm: {
+      clearKeys: channel.clearkey
+    },
+    streaming: {
+      retryParameters: { maxAttempts: 3, baseDelay: 1000, backoffFactor: 2 }
     }
+  });
+
+  // Custom headers
+  player.getNetworkingEngine().registerRequestFilter((type, request) => {
+    if (type === shaka.net.NetworkingEngine.RequestType.MANIFEST ||
+        type === shaka.net.NetworkingEngine.RequestType.SEGMENT) {
+      for (const key in channel.headers) {
+        request.headers[key] = channel.headers[key];
+      }
+    }
+  });
+
+  player.load(manifestUri).then(() => {
+    console.log(`${channel.name} loaded successfully`);
+  }).catch(err => console.error('Load error', err));
 }
 
-function displayChannels(channels) {
-    const container = document.getElementById('channels');
-    container.innerHTML = '';
+// Render playlist buttons
+const playlistDiv = document.getElementById('playlist');
+channels.forEach(channel => {
+  const btn = document.createElement('button');
+  btn.innerHTML = channel.name;
+  btn.onclick = () => playChannel(channel);
+  playlistDiv.appendChild(btn);
+});
 
-    channels.forEach(ch => {
-        const div = document.createElement('div');
-        div.className = 'channel';
-        div.innerHTML = `
-            <img src="${ch.logo}" alt="${ch.name}">
-            <p>${ch.name}</p>
-        `;
-        div.onclick = () => {
-            const playerUrl = 'https://cinearena.live/jioplyr.html?url=' + encodeURIComponent(ch.streamUrl);
-            window.open(playerUrl, '_blank');
-        };
-        container.appendChild(div);
-    });
-}
+// Play first channel by default
+playChannel(channels[0]);
 </script>
 
 </body>
