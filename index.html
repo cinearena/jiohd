@@ -2,285 +2,83 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Join @cine_arena</title>
-<link rel="icon" href="" type="image/x-icon" />
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jio M3U Player</title>
 <style>
-:root {
-    --bg-dark: #121212;
-    --bg-medium: #1E1E1E;
-    --text-primary: #FFFFFF;
-    --text-secondary: #B0B0B0;
-    --telegram-primary: #0088cc;
-    --telegram-hover: #0370a7;
-    --transition-speed: 0.3s;
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
-    background-color: var(--bg-dark);
-    color: var(--text-primary);
-    line-height: 1.6;
-}
-
-.container {
-    max-width: 1600px;
-    margin: 0 auto;
-    padding: 20px;
-    width: 100%;
-}
-
-a:link, a:visited {
-    color: white;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-}
-
-a:hover, a:active {
-    color: black;
-}
-
-.telegram-btn {
-    position: fixed;
-    width: 100%;
-    display: flex;
-    bottom: 60px;
-}
-
-.telegram-btn1, .telegram-btn2 {
-    flex: 1;
-    padding: 5px 0;
-    text-align: center;
-    font-weight: 900;
-    color: gold;
-    background-color: red;
-    transition: 0.2s;
-}
-
-.telegram-btn2 {
-    background-color: green;
-    color: red;
-}
-
-.search-bar {
-    text-align: center;
-    margin: 70px 0 20px;
-}
-
-.search-bar input {
-    padding: 8px 12px;
-    width: 80%;
-    max-width: 400px;
-    border-radius: 5px;
-    border: none;
-    font-size: 1rem;
-}
-
-.tab-content {
-    background: seashell;
-    padding: 10px;
-}
-
-.tab-pane {
-    overflow: hidden;
-    border: 1px solid #fff;
-    background-color: #f1f1f1;
-}
-
-.file-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 25px;
-    width: 100%;
-}
-
-.directory-item {
-    background-color: var(--bg-medium);
-    border-radius: 12px;
-    overflow: hidden;
-    transition: transform var(--transition-speed), box-shadow var(--transition-speed);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    text-align: center;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-}
-
-.directory-item:hover {
-    transform: scale(1.05);
-    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
-}
-
-.directory-item img {
-    width: 150px;
-    height: 150px;
-    margin-bottom: 15px;
-    object-fit: contain;
-}
-
-.directory-item a {
-    color: var(--text-primary);
-    text-decoration: none;
-    font-size: 1rem;
-    font-weight: 500;
-    width: 100%;
-}
-
-.directory-item b {
-    font-weight: 500;
-}
-
-iframe {
-    width: 100%;
-    max-height: 600px;
-    border: none;
-    margin: 20px 0;
-}
-
-.content-table {
-    text-align: center;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    color: #333;
-    background-color: gold;
-    border-collapse: collapse;
-    font-size: 0.9em;
-    box-shadow: 0 0 20px rgba(0,0,0,0.15);
-}
-
-.content-table th, .content-table td {
-    padding: 5px;
-    border: 1px solid gold;
-    color: #fff;
-}
-
-@media (max-width: 768px) {
-    .file-container {
-        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-        gap: 10px;
-    }
-    .directory-item img {
-        width: 100px;
-        height: 100px;
-    }
-    .directory-item a {
-        font-size: 0.8rem;
-    }
-    .search-bar input {
-        width: 90%;
-    }
-}
-
-@media (max-width: 480px) {
-    .file-container {
-        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-    }
-    .directory-item img {
-        width: 80px;
-        height: 80px;
-    }
-    .directory-item a {
-        font-size: 0.75rem;
-    }
-}
+    body { font-family: Arial, sans-serif; background: #f0f0f0; padding: 20px; }
+    input, button { padding: 10px; font-size: 16px; margin: 5px 0; }
+    #channels { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .channel { background: #fff; padding: 10px; border-radius: 8px; cursor: pointer; width: 200px; text-align: center; box-shadow: 0 2px 6px rgba(0,0,0,0.2);}
+    .channel img { max-width: 100%; border-radius: 4px; }
 </style>
 </head>
 <body>
 
-<!-- Telegram Buttons -->
-<div class="telegram-btn">
-    <div class="telegram-btn1"><a href="https://t.me/cine_arena">CineArena</a></div>
-    <div class="telegram-btn2"><a href="https://t.me/cine_arena">CineArena</a></div>
-</div>
+<h1>Jio M3U Player</h1>
+<input type="text" id="m3uUrl" placeholder="Paste M3U URL here" size="50"/>
+<button onclick="loadM3U()">Load Channels</button>
 
-<!-- Search -->
-<div class="search-bar">
-    <input type="text" id="search-input" placeholder="Search Channels" onkeyup="searchChannels()">
-</div>
-
-<!-- Channels -->
-<div class="tab-content">
-    <div class="tab-pane">
-        <div class="container">
-            <div id="app" class="file-container"></div>
-        </div>
-    </div>
-</div>
-
-<!-- Stream iframe -->
-<iframe id="stream-iframe" allowfullscreen></iframe>
-
-<!-- Footer Table -->
-<table class="content-table">
-<thead>
-<tr>
-<th width="30%"><a href="https://t.me/cine_arena"><img src="https://blogger.googleusercontent.com/img/a/AVvXsEgS2KS8R90zouZEqp4NV8v8mXnUaa0CH4ms-RUnJnRLmYj5zdegccxN10-YXkJArUDOzCjksz77YlETLC63edZYUaDyYBaMPWDVDuyDjYV5bhhhYa5FYgu2qHkd0FcCq-Au_2YXSYza4YGnv1WgRR2O_caQI8nR6SRPJFqKVQICOnjzWhsi3VWe5Nzjewg" width="90%" height="40px"></a></th>
-<td><a href="https://t.me/cine_arena"><button><b>t.me/cine_arena</b></button></a></td>
-<th width="30%"><a href="https://t.me/cine_arena"><img src="https://blogger.googleusercontent.com/img/a/AVvXsEgdW6vop6CO-Sw5e7USP7uj_dCdoQJWSYALuTqDa0Kh5m7H0jl1rSMltPVtDrlKIWPxGe5HLwMd8z_TnDWYFB-ePgb_DbI5LJozDpyvP0L7sK-W422Cm02k3hzZ0XzNhYaJ2A80MT5l7nlebxLL16uFvTKSNRPNr3Ctb51dVMShgVNDsu5XHpCtdVSbW0g" width="90%" height="40px"></a></th>
-<td><a href="https://t.me/cine_arena"><button><b>t.me/cine_arena</b></button></a></td>
-</tr>
-</thead>
-</table>
+<div id="channels"></div>
 
 <script>
-// Fetch channels and display
-function getData() {
-    fetch("https://raw.githubusercontent.com/cinearena/jiohd/main/jiohd.json")
-        .then(res => res.json())
-        .then(json => {
-            const html = json.data.map(item => {
-                return `
-                <div data-name='${item.name}' class='directory-item'>
-                    <a href='https://cinearena.live/proxy/jio.html?id=${item.id}'>
-                        <img src='${item.logo}'>
-                    </a>
-                    <a href='https://cinearena.live/proxy/jio.html?id=${item.id}'>
-                        <b>${item.name}</b>
-                    </a>
-                </div>`;
-            }).join("");
-            document.querySelector("#app").insertAdjacentHTML("afterbegin", html);
-        })
-        .catch(error => console.log(error));
-}
-getData();
+async function loadM3U() {
+    const url = document.getElementById('m3uUrl').value;
+    if (!url) return alert('Please enter an M3U URL.');
 
-// Search function
-function searchChannels() {
-    var input = document.getElementById('search-input').value.toLowerCase();
-    var channels = document.querySelectorAll('.directory-item');
-    channels.forEach(function(channel) {
-        var name = channel.getAttribute('data-name').toLowerCase();
-        channel.style.display = name.includes(input) ? 'inline-block' : 'none';
+    try {
+        const res = await fetch(url);
+        const text = await res.text();
+
+        const lines = text.split('\n');
+        const channels = [];
+
+        for (let i = 0; i < lines.length; i++) {
+            const line = lines[i];
+            if (line.startsWith('#EXTINF')) {
+                const infoMatch = line.match(/tvg-logo="(.*?)".*?,(.*)/);
+                if (!infoMatch) continue;
+
+                const logo = infoMatch[1];
+                const name = infoMatch[2];
+
+                // Stream URL is usually next line that is not comment
+                let streamUrl = '';
+                for (let j = i + 1; j < lines.length; j++) {
+                    if (!lines[j].startsWith('#') && lines[j].trim()) {
+                        streamUrl = lines[j].trim();
+                        break;
+                    }
+                }
+
+                if (streamUrl) channels.push({name, logo, streamUrl});
+            }
+        }
+
+        displayChannels(channels);
+    } catch (err) {
+        console.error(err);
+        alert('Failed to fetch or parse M3U.');
+    }
+}
+
+function displayChannels(channels) {
+    const container = document.getElementById('channels');
+    container.innerHTML = '';
+
+    channels.forEach(ch => {
+        const div = document.createElement('div');
+        div.className = 'channel';
+        div.innerHTML = `
+            <img src="${ch.logo}" alt="${ch.name}">
+            <p>${ch.name}</p>
+        `;
+        div.onclick = () => {
+            const playerUrl = 'https://cinearena.github.io/jioplyr.html?url=' + encodeURIComponent(ch.streamUrl);
+            window.open(playerUrl, '_blank');
+        };
+        container.appendChild(div);
     });
 }
-
-// Stream iframe loader
-document.addEventListener('DOMContentLoaded', function() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const streamId = urlParams.get('id');
-    if (!streamId) return;
-
-    fetch('https://raw.githubusercontent.com/cinearena/jiohd/main/jiohd.json')
-        .then(response => response.json())
-        .then(data => {
-            const streamInfo = data.data.find(item => item.id === streamId);
-            if (!streamInfo) return;
-            const iframe = document.getElementById('stream-iframe');
-            iframe.src = `https://cinearena.live/jioplyr.html?id=${streamInfo.id}`;
-        })
-        .catch(error => console.error('Error fetching stream data:', error));
-});
 </script>
 
 </body>
