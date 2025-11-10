@@ -1,253 +1,140 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Join @cine_arena </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CineArena + JioHD</title>
     <link rel="icon" href="" type="image/x-icon" />
-  
-    
 
-<style>
-.active{background:red}
-.fix{visibility:hidden}
-.fixed{background:gold;position:fixed}
-.tab-pane{overflow: hidden;
-  border: 1px solid #fff;
-  background-color: #f1f1f1;align:center;vertical-align:middle;vertical-align:middle;align:center;align-items:center;vertical-align:middle;horizontal-align:middle;} 
-  
- .tab-content{background:SeaShell;
-  float: left;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  padding-top: 10px;  padding-left: 4px;
-  padding-right: 4px;
-  padding-bottom: 64px;
-
-  transition: 0.3s;
-  font-size: 9px;align:center;vertical-align:middle;vertical-align:middle;align:center;align-items:center;vertical-align:middle;horizontal-align:middle;width:100%}
-
-</style>
-
-<style>
-a:link, a:visited {color: white;
-  
-
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-}
-
-a:hover, a:active {
-  color: black;
-}
-    
-        :root {
-            --bg-dark: #121212;
-            --bg-medium: #1E1E1E;
-            --text-primary: #FFFFFF;
-            --text-secondary: #B0B0B0;
-            --telegram-primary: #0088cc;
-            --telegram-hover: #0370a7;
-            --transition-speed: 0.3s;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+    <style>
         body {
             font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
-            background-color: var(--bg-dark);
-            color: var(--text-primary);
-            line-height: 1.6;
+            background-color: #121212;
+            color: #FFFFFF;
+            margin: 0;
+            padding: 0;
         }
-
-        .container {align:center;
+        .container {
             max-width: 1600px;
-            margin: 0 auto;
+            margin: 20px auto;
             padding: 20px;
             width: 100%;
         }
-
-        
-
-        .telegram-btn {position: fixed;
-            background-color: gold;
-            
-            padding: 2px 2px;
-            
-            text-decoration: none;
-            
-            transition: all 0.2s ease;
-            
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            white-space: nowrap;
-            width: 100%;
-            flex-shrink: 0;
-        }
-.telegram-btn1 {
-            background-color:red;
-            color: gold;
-            padding: 2px 2px;
-            border-radius: 0px;
-            text-decoration: none;
-            font-weight: 900;
-            transition: all 0.2s ease;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            white-space: nowrap;
-            
-            flex-shrink: 0;
-        }
-.telegram-btn2 {
-            background-color: green;
-            color:red;
-            padding: 2px 2px;
-            border-radius: 0px;
-            text-decoration: none;
-            font-weight: 900;
-            transition: all 0.2s ease;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            white-space: nowrap;
-            
-            flex-shrink: 0;
-        }
-
-        
-
         .file-container {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
             gap: 25px;
-            width: 100%;
         }
-
         .directory-item {
-            background-color: var(--bg-medium);
+            background-color: #1E1E1E;
             border-radius: 12px;
             overflow: hidden;
-            transition: transform var(--transition-speed), box-shadow var(--transition-speed);
             display: flex;
             flex-direction: column;
             align-items: center;
             padding: 20px;
             text-align: center;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
         }
-
         .directory-item:hover {
             transform: scale(1.05);
             box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
         }
-
         .directory-item img {
             width: 150px;
             height: 150px;
-            margin-bottom: 15px;
             object-fit: contain;
+            margin-bottom: 15px;
         }
-
         .directory-item a {
-            color: var(--text-primary);
+            color: #FFFFFF;
             text-decoration: none;
             font-size: 1rem;
-            font-weight: 500;  /* Changed from 500 to 400 for lighter font weight */
+            font-weight: 500;
+        }
+        .telegram-btn, .telegram-btn1, .telegram-btn2 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .telegram-btn1 { background-color: red; color: gold; padding: 5px; display: inline-block; width: 48%; }
+        .telegram-btn2 { background-color: green; color: red; padding: 5px; display: inline-block; width: 48%; }
+        #search-input {
             width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: none;
+            font-size: 1rem;
         }
-
-        .directory-item b {
-            font-weight: 500;  /* Changed from default bold to 400 for lighter font weight */
+        iframe#stream-iframe {
+            width: 100%;
+            height: 500px;
+            border: none;
+            margin-top: 20px;
         }
-
         @media (max-width: 768px) {
-            .file-container {
-                grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-                gap: 10px;
-            }
-
-            .directory-item {
-                padding: 10px;
-            }
-
-            .directory-item img {
-                width: 80px;
-                height: 80px;
-            }
-
-            .directory-item a {
-                font-size: 0.8rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .file-container {
-                grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-                gap: 10px;
-            }
-
-            .directory-item {
-                padding: 10px;
-            }
-
-            .directory-item img {
-                width: 80px;
-                height: 80px;
-            }
-
-            .directory-item a {
-                font-size: 0.8rem;
-            }
+            .file-container { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 15px; }
+            .directory-item img { width: 80px; height: 80px; }
+            .directory-item a { font-size: 0.8rem; }
         }
     </style>
-  
+
 </head>
 <body>
-    
-        
-            <table class="telegram-btn"><tr><td class="telegram-btn1" width="50%"><a href="https://t.me/cine_arena">CineArena </a></td><td class="telegram-btn2" width="50%"><a href="https://t.me/cine_arena">CineArena </a></td></tr></table>
- <table class="telegram-btn1"><tr><td class="telegram-btn1" width="50%"><a href="https://t.me/cine_arena">CineArena</a></td><td class="telegram-btn2" width="50%"><a href="https://t.me/cine_arena">CineArena </a></td></tr></table>
- 
-   <div class="search-bar"> <input type="text" id="search-input" placeholder="Search Channels" onkeyup="searchChannels()"></div>
 
- 
- 
- 
-<div class="tab-content">
-  <div class="tab-pane">
-<div class="container">
-<div id="app" class="file-container"> </div>
-</div></div></div>
+    <!-- Telegram Buttons -->
+    <div class="telegram-btn">
+        <div class="telegram-btn1"><a href="https://t.me/cine_arena" target="_blank">CineArena</a></div>
+        <div class="telegram-btn2"><a href="https://t.me/cine_arena" target="_blank">CineArena</a></div>
+    </div>
 
+    <!-- Search -->
+    <input type="text" id="search-input" placeholder="Search Channels" onkeyup="searchChannels()">
 
-<script>function getData() {fetch("https://raw.githubusercontent.com/cinearena/jiohd/main/jiohd.json") .then(res => {return res.json(); })  .then(json => {console.log(json.data);const html  = json  .map(function(item) { return  "<div data-name='" + item.name+ "' class='directory-item'><a href='https://cinearena.live/jioplyr.html?id="+item.id+"'><img src='"+item.logo+"'></a><a href='https://cinearena.live/jioplyr.html?id="+item.id+"'><b>"+item.name+"</b></a></div>"; }) .join(""); console.log(html);document.querySelector("#app" ).insertAdjacentHTML("afterbegin", html); }) .catch(error => { console.log(error); });}getData();</script>
+    <!-- Channel Grid -->
+    <div class="container">
+        <div id="app" class="file-container"></div>
+    </div>
 
+    <!-- Stream Player Iframe -->
+    <iframe id="stream-iframe" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
 
-<style>.content-table {              text-align: center;position: fixed;             color: #333;position: fixed;bottom:0px;bottom:0px ;text-align:center;background-color:gold; border-collapse: collapse; margin: 1px 0;  font-size: 0.9em;  min-width: 100%;  border-radius: 3px ;  overflow: hidden;  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);}.content-table thead tr {  background-color:gold;  color: #ffffff;  text-align: center;  font-weight: bold}.content-table th,.content-table td {color:#fff;  padding:  1px;border:1px solid gold;background:}.content-table tbody tr {  border: 1px solid #dddddd;}.content-table tbody tr:nth-of-type(even) {  background-color: #f3f3f3;}.content-table tbody tr:last-of-type {  border: px solid #009879;}.content-table tbody tr.active-row {  font-weight: bold;  color: #009879;}</style><table class="content-table">  <thead>     <tr>      <th width="30%"><a href="https://t.me/cine_arena"><img src="https://blogger.googleusercontent.com/img/a/AVvXsEgS2KS8R90zouZEqp4NV8v8mXnUaa0CH4ms-RUnJnRLmYj5zdegccxN10-YXkJArUDOzCjksz77YlETLC63edZYUaDyYBaMPWDVDuyDjYV5bhhhYa5FYgu2qHkd0FcCq-Au_2YXSYza4YGnv1WgRR2O_caQI8nR6SRPJFqKVQICOnjzWhsi3VWe5Nzjewg" width="90%" height="40px"></a></th>            <td><a href="https://t.me/cine_arena"><button><b>t.me/cine_arena</b> </button></a></td>            <th width="30%"><a href="https://t.me/cine_arena"><img src="https://blogger.googleusercontent.com/img/a/AVvXsEgdW6vop6CO-Sw5e7USP7uj_dCdoQJWSYALuTqDa0Kh5m7H0jl1rSMltPVtDrlKIWPxGe5HLwMd8z_TnDWYFB-ePgb_DbI5LJozDpyvP0L7sK-W422Cm02k3hzZ0XzNhYaJ2A80MT5l7nlebxLL16uFvTKSNRPNr3Ctb51dVMShgVNDsu5XHpCtdVSbW0g" width="90%" height="40px"></a></th>      <td><a href="https://t.me/cine_arena"> <button><b>t.me/cine_arena</b></button> </a></td> </tr></table>
+    <script>
+        // Fetch channels and populate grid
+        function getData() {
+            fetch("https://raw.githubusercontent.com/cinearena/jiohd/main/jiohd.json")
+                .then(res => res.json())
+                .then(json => {
+                    const html = json.map(item => {
+                        return `
+                            <div data-name="${item.name}" class="directory-item" onclick="loadStream('${item.id}')">
+                                <a href="#"><img src="${item.logo}" alt="${item.name}"></a>
+                                <a href="#"><b>${item.name}</b></a>
+                            </div>`;
+                    }).join("");
+                    document.querySelector("#app").insertAdjacentHTML("afterbegin", html);
+                })
+                .catch(error => console.log(error));
+        }
+        getData();
 
-<script> function filterChannels() { var selectedGroup = document.getElementById('group-select').value; var channels = document.querySelectorAll('.directory-item'); channels.forEach(function(channel) { if (selectedGroup === 'all' || channel.getAttribute('data-group') === selectedGroup) { channel.style.display = 'inline-block'; } else { channel.style.display = 'none'; } }); } function searchChannels() { var input = document.getElementById('search-input').value.toLowerCase(); var channels = document.querySelectorAll('.directory-item'); channels.forEach(function(channel) { var name = channel.getAttribute('data-name').toLowerCase(); if (name.includes(input)) { channel.style.display = 'inline-block'; } else { channel.style.display = 'none'; } }); } function searchChannels() { var input = document.getElementById('search-input').value.toLowerCase(); var channels = document.querySelectorAll('.directory-item'); channels.forEach(function(channel) { var name = channel.getAttribute('data-name').toLowerCase(); if (name.includes(input)) { channel.style.display = 'inline-block'; } else { channel.style.display = 'none'; } }); } const checkbox = document.getElementById("checkbox"); checkbox.addEventListener("change", () => { document.body.classList.toggle("dark-mode"); }); </script>
+        // Load stream in iframe
+        function loadStream(streamId) {
+            const iframe = document.getElementById('stream-iframe');
+            iframe.src = `https://cinearena.live/jioplyr.html?id=${streamId}`;
+            window.scrollTo({ top: iframe.offsetTop, behavior: 'smooth' });
+        }
 
+        // Search channels
+        function searchChannels() {
+            const input = document.getElementById('search-input').value.toLowerCase();
+            const channels = document.querySelectorAll('.directory-item');
+            channels.forEach(channel => {
+                const name = channel.getAttribute('data-name').toLowerCase();
+                channel.style.display = name.includes(input) ? 'inline-block' : 'none';
+            });
+        }
+    </script>
 
-
-
-
-
-
-
-
-
-
-
-
-
+</body>
+</html>
