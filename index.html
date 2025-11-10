@@ -73,7 +73,7 @@ function displayChannels(channels) {
             <p>${ch.name}</p>
         `;
         div.onclick = () => {
-            const playerUrl = 'https://cinearena.github.io/jioplyr.html?url=' + encodeURIComponent(ch.streamUrl);
+            const playerUrl = 'https://cinearena.live/jioplyr.html?url=' + encodeURIComponent(ch.streamUrl);
             window.open(playerUrl, '_blank');
         };
         container.appendChild(div);
