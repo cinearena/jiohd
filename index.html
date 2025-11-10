@@ -1,255 +1,301 @@
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>JOIN TV4WAP LIVE4WAP </title>
-    <link rel="icon" href="" type="image/x-icon" />
-  
-    
-
-<style>
-.active{background:red}
-.fix{visibility:hidden}
-.fixed{background:gold;position:fixed}
-.tab-pane{overflow: hidden;
-  border: 1px solid #fff;
-  background-color: #f1f1f1;align:center;vertical-align:middle;vertical-align:middle;align:center;align-items:center;vertical-align:middle;horizontal-align:middle;} 
-  
- .tab-content{background:SeaShell;
-  float: left;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  padding-top: 10px;  padding-left: 4px;
-  padding-right: 4px;
-  padding-bottom: 64px;
-
-  transition: 0.3s;
-  font-size: 9px;align:center;vertical-align:middle;vertical-align:middle;align:center;align-items:center;vertical-align:middle;horizontal-align:middle;width:100%}
-
-</style>
-
-<style>
-a:link, a:visited {color: white;
-  
-
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-}
-
-a:hover, a:active {
-  color: black;
-}
-    
-        :root {
-            --bg-dark: #121212;
-            --bg-medium: #1E1E1E;
-            --text-primary: #FFFFFF;
-            --text-secondary: #B0B0B0;
-            --telegram-primary: #0088cc;
-            --telegram-hover: #0370a7;
-            --transition-speed: 0.3s;
-        }
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TWAWAP - Indian TV Streaming</title>
+    <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
+        
         body {
-            font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
-            background-color: var(--bg-dark);
-            color: var(--text-primary);
-            line-height: 1.6;
+            font-family: 'Courier New', monospace;
+            background: #1a1a1a;
+            color: #00ff00;
+            display: flex;
+            height: 100vh;
         }
-
-        .container {align:center;
-            max-width: 1600px;
-            margin: 0 auto;
+        
+        /* Terminal Sidebar */
+        .terminal-sidebar {
+            width: 300px;
+            background: #000;
+            border-right: 2px solid #00ff00;
             padding: 20px;
-            width: 100%;
+            overflow-y: auto;
         }
-
         
-
-        .telegram-btn {position: fixed;
-            background-color: gold;
-            
-            padding: 2px 2px;
-            
-            text-decoration: none;
-            
-            transition: all 0.2s ease;
-            
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            white-space: nowrap;
-            width: 100%;
-            flex-shrink: 0;
+        .dir-title {
+            color: #ffff00;
+            margin-bottom: 15px;
+            font-weight: bold;
+            font-size: 18px;
         }
-.telegram-btn1 {
-            background-color:red;
-            color: gold;
-            padding: 2px 2px;
-            border-radius: 0px;
-            text-decoration: none;
-            font-weight: 900;
-            transition: all 0.2s ease;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            white-space: nowrap;
-            
-            flex-shrink: 0;
-        }
-.telegram-btn2 {
-            background-color: green;
-            color:red;
-            padding: 2px 2px;
-            border-radius: 0px;
-            text-decoration: none;
-            font-weight: 900;
-            transition: all 0.2s ease;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            white-space: nowrap;
-            
-            flex-shrink: 0;
-        }
-
         
-
-        .file-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 25px;
-            width: 100%;
+        .file-structure {
+            list-style: none;
         }
-
-        .directory-item {
-            background-color: var(--bg-medium);
-            border-radius: 12px;
-            overflow: hidden;
-            transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+        
+        .file-item {
+            padding: 10px 8px;
+            border-bottom: 1px solid #333;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+        }
+        
+        .file-item:hover {
+            background: #003300;
+            color: #ffff00;
+        }
+        
+        .file-icon {
+            margin-right: 8px;
+            font-weight: bold;
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
-
-        .directory-item:hover {
-            transform: scale(1.05);
-            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+        
+        .player-container {
+            flex: 1;
+            background: #000;
+            position: relative;
         }
-
-        .directory-item img {
-            width: 150px;
-            height: 150px;
-            margin-bottom: 15px;
-            object-fit: contain;
-        }
-
-        .directory-item a {
-            color: var(--text-primary);
-            text-decoration: none;
-            font-size: 1rem;
-            font-weight: 500;  /* Changed from 500 to 400 for lighter font weight */
+        
+        #stream-iframe {
             width: 100%;
+            height: 100%;
+            border: none;
         }
-
-        .directory-item b {
-            font-weight: 500;  /* Changed from default bold to 400 for lighter font weight */
+        
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #00ff00;
+            font-size: 18px;
         }
-
-        @media (max-width: 768px) {
-            .file-container {
-                grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-                gap: 10px;
-            }
-
-            .directory-item {
-                padding: 10px;
-            }
-
-            .directory-item img {
-                width: 80px;
-                height: 80px;
-            }
-
-            .directory-item a {
-                font-size: 0.8rem;
-            }
+        
+        .error {
+            color: #ff0000;
+            text-align: center;
+            padding: 20px;
+            font-size: 16px;
         }
-
-        @media (max-width: 480px) {
-            .file-container {
-                grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-                gap: 10px;
-            }
-
-            .directory-item {
-                padding: 10px;
-            }
-
-            .directory-item img {
-                width: 80px;
-                height: 80px;
-            }
-
-            .directory-item a {
-                font-size: 0.8rem;
-            }
+        
+        .channel-info {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #00ff00;
+        }
+        
+        .channel-logo {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            margin-bottom: 5px;
+        }
+        
+        .channel-name {
+            font-size: 14px;
+            color: #ffff00;
         }
     </style>
-  
 </head>
 <body>
-    
-        
-            <table class="telegram-btn"><tr><td class="telegram-btn1" width="50%"><a href="https://t.me/tvgotk">LIVE4WAP </a></td><td class="telegram-btn2" width="50%"><a href="https://t.me/tv4wap">TV4WAP </a></td></tr></table>
- <table class="telegram-btn1"><tr><td class="telegram-btn1" width="50%"><a href="https://t.me/tvgotk">LIVE4WAP </a></td><td class="telegram-btn2" width="50%"><a href="https://t.me/tv4wap">TV4WAP </a></td></tr></table>
- 
-   <div class="search-bar"> <input type="text" id="search-input" placeholder="Search Channels" onkeyup="searchChannels()"></div>
+    <!-- Terminal Sidebar -->
+    <div class="terminal-sidebar">
+        <div class="dir-title"># TWAWAP TV DIRECTORY</div>
+        <ul class="file-structure">
+            <li class="file-item" onclick="loadChannel('1373')">
+                <span class="file-icon">▶</span> Disney Channel
+            </li>
+            <li class="file-item" onclick="loadChannel('1374')">
+                <span class="file-icon">▶</span> Disney Junior
+            </li>
+            <li class="file-item" onclick="loadChannel('1132')">
+                <span class="file-icon">▶</span> Star Plus HD
+            </li>
+            <li class="file-item" onclick="loadChannel('1116')">
+                <span class="file-icon">▶</span> Star Plus
+            </li>
+            <li class="file-item" onclick="loadChannel('156')">
+                <span class="file-icon">▶</span> Star Gold HD
+            </li>
+            <li class="file-item" onclick="loadChannel('144')">
+                <span class="file-icon">▶</span> Colors HD
+            </li>
+            <li class="file-item" onclick="loadChannel('173')">
+                <span class="file-icon">▶</span> Aaj Tak
+            </li>
+            <li class="file-item" onclick="loadChannel('177')">
+                <span class="file-icon">▶</span> ABP News India
+            </li>
+            <li class="file-item" onclick="loadChannel('1104')">
+                <span class="file-icon">▶</span> Star Movies HD
+            </li>
+            <li class="file-item" onclick="loadChannel('1335')">
+                <span class="file-icon">▶</span> National Geographic HD
+            </li>
+            <!-- Add more channels as needed -->
+        </ul>
+    </div>
 
- 
- 
- 
-<div class="tab-content">
-  <div class="tab-pane">
-<div class="container">
-<div id="app" class="file-container"> </div>
-</div></div></div>
+    <!-- Main Player Area -->
+    <div class="main-content">
+        <div class="player-container">
+            <div class="loading" id="loading">Select a channel to start streaming...</div>
+            <iframe id="stream-iframe" style="display: none;" allowfullscreen></iframe>
+            <div class="error" id="error" style="display: none;"></div>
+            
+            <!-- Channel Info Display -->
+            <div class="channel-info" id="channel-info" style="display: none;">
+                <img id="channel-logo" class="channel-logo" src="" alt="">
+                <div id="channel-name" class="channel-name"></div>
+            </div>
+        </div>
+    </div>
 
+    <script>
+        // Your JSON data (truncated for example)
+        const channelsData = [
+            {"keyId":"5181d3e6698055578cedc5bfc86b3e56","key":"3dca7917d8cf9bb7095dc72b48bdcd3c", "id":"1373","logo":"https://jiotvimages.cdn.jio.com/dare_images/images/Disney_Channel.png","name":"Disney Channel","url":"https://jiotvpllive.cdn.jio.com/bpk-tv/Disney_Channel_BTS/output/index.mpd"},
+            {"keyId":"1b1f9702f7d853c1b198495f64924311","key":"40e11e60a12dd6c154dfea0ffbd5bda8", "id":"1374","logo":"https://jiotvimages.cdn.jio.com/dare_images/images/Disney_Junior.png","name":"Disney Junior","url":"https://jiotvpllive.cdn.jio.com/bpk-tv/Disney_Junior_BTS/output/index.mpd"},
+            {"keyId":"6f7b7241b2935a909d389fe318e5baaa","key":"65783311644973348f359dc154bb41db", "id":"1132","logo":"https://jiotvimages.cdn.jio.com/dare_images/images/Star_Plus_HD.png","name":"Star Plus HD","url":"https://jiotvpllive.cdn.jio.com/bpk-tv/Star_Plus_HD_BTS/output/index.mpd"},
+            // Add more channels from your JSON data...
+        ];
 
-<script>function getData() {fetch("https://tvgo.neocities.org/Json/jiohd.txt") .then(res => {return res.json(); })  .then(json => {console.log(json.data);const html  = json  .map(function(item) { return  "<div data-name='" + item.name+ "' class='directory-item'><a href='https://cinearena.live/proxy/index.html?id="+item.id+"'><img src='"+item.logo+"'></a><a href='https://cinearena.live/proxy/index.html?id="+item.id+"'><b>"+item.name+"</b></a></div>"; }) .join(""); console.log(html);document.querySelector("#app" ).insertAdjacentHTML("afterbegin", html); }) .catch(error => { console.log(error); });}getData();</script>
+        class TVStreamPlayer {
+            constructor() {
+                this.iframe = document.getElementById('stream-iframe');
+                this.loading = document.getElementById('loading');
+                this.error = document.getElementById('error');
+                this.channelInfo = document.getElementById('channel-info');
+                this.channelLogo = document.getElementById('channel-logo');
+                this.channelName = document.getElementById('channel-name');
+                this.currentChannel = null;
+            }
 
+            loadChannel(channelId) {
+                const channel = channelsData.find(c => c.id === channelId);
+                
+                if (!channel) {
+                    this.showError('Channel not found');
+                    return;
+                }
 
-<style>.content-table {              text-align: center;position: fixed;             color: #333;position: fixed;bottom:0px;bottom:0px ;text-align:center;background-color:gold; border-collapse: collapse; margin: 1px 0;  font-size: 0.9em;  min-width: 100%;  border-radius: 3px ;  overflow: hidden;  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);}.content-table thead tr {  background-color:gold;  color: #ffffff;  text-align: center;  font-weight: bold}.content-table th,.content-table td {color:#fff;  padding:  1px;border:1px solid gold;background:}.content-table tbody tr {  border: 1px solid #dddddd;}.content-table tbody tr:nth-of-type(even) {  background-color: #f3f3f3;}.content-table tbody tr:last-of-type {  border: px solid #009879;}.content-table tbody tr.active-row {  font-weight: bold;  color: #009879;}</style><table class="content-table">  <thead>     <tr>      <th width="30%"><a href="https://t.me/tvgotk"><img src="https://blogger.googleusercontent.com/img/a/AVvXsEgS2KS8R90zouZEqp4NV8v8mXnUaa0CH4ms-RUnJnRLmYj5zdegccxN10-YXkJArUDOzCjksz77YlETLC63edZYUaDyYBaMPWDVDuyDjYV5bhhhYa5FYgu2qHkd0FcCq-Au_2YXSYza4YGnv1WgRR2O_caQI8nR6SRPJFqKVQICOnjzWhsi3VWe5Nzjewg" width="90%" height="40px"></a></th>            <td><a href="https://t.me/tvgotk"><button><b>t.me/tvgotk</b> </button></a></td>            <th width="30%"><a href="https://t.me/tv4wap"><img src="https://blogger.googleusercontent.com/img/a/AVvXsEgdW6vop6CO-Sw5e7USP7uj_dCdoQJWSYALuTqDa0Kh5m7H0jl1rSMltPVtDrlKIWPxGe5HLwMd8z_TnDWYFB-ePgb_DbI5LJozDpyvP0L7sK-W422Cm02k3hzZ0XzNhYaJ2A80MT5l7nlebxLL16uFvTKSNRPNr3Ctb51dVMShgVNDsu5XHpCtdVSbW0g" width="90%" height="40px"></a></th>      <td><a href="https://t.me/tv4wap"> <button><b>t.me/tv4wap</b></button> </a></td> </tr></table>
+                this.currentChannel = channel;
+                this.showLoading(`Loading ${channel.name}...`);
+                this.displayChannelInfo(channel);
 
-<script> function filterChannels() { var selectedGroup = document.getElementById('group-select').value; var channels = document.querySelectorAll('.directory-item'); channels.forEach(function(channel) { if (selectedGroup === 'all' || channel.getAttribute('data-group') === selectedGroup) { channel.style.display = 'inline-block'; } else { channel.style.display = 'none'; } }); } function searchChannels() { var input = document.getElementById('search-input').value.toLowerCase(); var channels = document.querySelectorAll('.directory-item'); channels.forEach(function(channel) { var name = channel.getAttribute('data-name').toLowerCase(); if (name.includes(input)) { channel.style.display = 'inline-block'; } else { channel.style.display = 'none'; } }); } function searchChannels() { var input = document.getElementById('search-input').value.toLowerCase(); var channels = document.querySelectorAll('.directory-item'); channels.forEach(function(channel) { var name = channel.getAttribute('data-name').toLowerCase(); if (name.includes(input)) { channel.style.display = 'inline-block'; } else { channel.style.display = 'none'; } }); } const checkbox = document.getElementById("checkbox"); checkbox.addEventListener("change", () => { document.body.classList.toggle("dark-mode"); }); </script>
+                try {
+                    // Build the stream URL using the encryption keys
+                    const streamUrl = this.buildStreamUrl(channel);
+                    console.log('Stream URL:', streamUrl);
+                    
+                    this.iframe.src = streamUrl;
+                    this.iframe.style.display = 'block';
+                    this.loading.style.display = 'none';
+                    this.error.style.display = 'none';
+                    
+                } catch (err) {
+                    this.showError('Failed to load stream: ' + err.message);
+                }
+            }
 
+            buildStreamUrl(channel) {
+                if (!channel.keyId || !channel.key || !channel.url) {
+                    throw new Error('Invalid channel data: missing keys or URL');
+                }
 
+                // URL encode the components
+                const encodedUrl = encodeURIComponent(channel.url);
+                const encodedKeyId = encodeURIComponent(channel.keyId);
+                const encodedKey = encodeURIComponent(channel.key);
 
+                // Build the player URL (adjust this based on your player service)
+                return `https://jsl1.pages.dev/hr1-s${encodedUrl}&keyid=${encodedKeyId}&key=${encodedKey}`;
+                
+                // Alternative URL format if needed:
+                // return `https://your-player-domain.com/player.html?stream=${encodedUrl}&keyid=${encodedKeyId}&key=${encodedKey}`;
+            }
 
+            displayChannelInfo(channel) {
+                this.channelLogo.src = channel.logo;
+                this.channelLogo.alt = channel.name;
+                this.channelName.textContent = channel.name;
+                this.channelInfo.style.display = 'block';
+            }
 
+            showLoading(message) {
+                this.loading.textContent = message;
+                this.loading.style.display = 'block';
+                this.iframe.style.display = 'none';
+                this.error.style.display = 'none';
+            }
 
+            showError(message) {
+                this.loading.style.display = 'none';
+                this.iframe.style.display = 'none';
+                this.error.style.display = 'block';
+                this.error.textContent = message;
+                this.channelInfo.style.display = 'none';
+            }
 
+            // Search functionality
+            searchChannels(query) {
+                return channelsData.filter(channel => 
+                    channel.name.toLowerCase().includes(query.toLowerCase())
+                );
+            }
+        }
 
+        // Initialize the player
+        const player = new TVStreamPlayer();
 
+        // Global function for sidebar clicks
+        function loadChannel(channelId) {
+            player.loadChannel(channelId);
+        }
 
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey || e.metaKey) {
+                switch(e.key) {
+                    case '1':
+                        e.preventDefault();
+                        loadChannel('1373'); // Disney Channel
+                        break;
+                    case '2':
+                        e.preventDefault();
+                        loadChannel('1132'); // Star Plus HD
+                        break;
+                    case '3':
+                        e.preventDefault();
+                        loadChannel('144'); // Colors HD
+                        break;
+                }
+            }
+        });
 
-
-
-
+        // Auto-load first channel on page load (optional)
+        // window.addEventListener('load', () => {
+        //     loadChannel('1373');
+        // });
+    </script>
+</body>
+</html>
